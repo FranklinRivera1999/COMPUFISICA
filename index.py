@@ -1,6 +1,5 @@
 import serial
 import json
-from firebase import firebase
 import requests
 
 
@@ -12,6 +11,7 @@ arduino = serial.Serial(PORT,9600)
 while True:
     #jsonRead= arduino.readline()
     #print(arduino.readline())
+    
     try:
         jsonObject= json.loads(arduino.readline())
         print(jsonObject["H"])
@@ -21,11 +21,12 @@ while True:
         print(jsonObject["T2"])
         print(jsonObject["V"])
         print(jsonObject["Time"])
+        print(jsonObject["L"])
         print(type(jsonObject["Time"]))
         print('-------enviar thingsspeak-----')
         enviar = requests.get("https://api.thingspeak.com/update?api_key=3HIK3GQGLHPDWYWV&field1="
         + str(jsonObject["T"]) + "&field2=" + str(jsonObject["H"]) + "&field3=" + str(jsonObject["P"]) + "&field4=" + str(jsonObject["A"]))
-        print('GG AL')
+        print('Columnas Enviadas')
 
     except Exception:
         pass

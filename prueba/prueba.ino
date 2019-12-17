@@ -15,6 +15,10 @@ double Altura = 0;
 double Temperatura = 0;
 char status;
 
+double lumin = 0;
+int ldr_pin = A0;     
+const float coeficiente = 100.0 / 1023.0;
+
 int encoder_pin = 2;         
 unsigned int rpm = 0;    
 float velocity = 0;     
@@ -31,7 +35,7 @@ void setup() {
 
   SensorStart();
   pinMode(encoder_pin, INPUT);
-   attachInterrupt(0, counter, RISING);
+  attachInterrupt(0, counter, RISING);
    pulses = 0;
    rpm = 0;
    timeold = 0;
@@ -49,9 +53,18 @@ void loop() {
       pulses = 0; 
       interrupts();
  }
+
+lumin = (100.0 - analogRead( ldr_pin ) * coeficiente);
+//lumin = digitalRead( ldr_pin );
  ReadSensor();
- Serial.println("{\"H\":"+(String)dht.readHumidity()+", \"T\":"+(String)dht.readTemperature()+", \"P\":"
- +(String)Presion+", \"A\":"+(String)Altura+", \"T2\":"+(String)Temperatura+", \"V\":"+(String)velocity+", \"Time\":"+(String)timecurrent+"}");
+ Serial.println("{\"H\":"+(String)dht.readHumidity()+
+ ", \"T\":"+(String)dht.readTemperature()+
+ ", \"P\":"+(String)Presion+
+ ", \"A\":"+(String)Altura+
+ ", \"T2\":"+(String)Temperatura+
+ ", \"V\":"+(String)velocity+
+ ", \"Time\":"+(String)timecurrent+
+ ", \"L\":" +(String)lumin+"}");
  delay(1000);
 }
 
