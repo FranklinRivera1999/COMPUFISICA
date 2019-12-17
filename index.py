@@ -6,16 +6,21 @@ firebase = firebase.FirebaseApplication('https://estacionmet-7edb5.firebaseio.co
 
 result = firebase.get('/prueba', None)
 print(result)
-
+print('declarando ARDUINO UNO')
 PORT='/dev/ttyACM0'
 arduino = serial.Serial(PORT,9600)
+
 
 while True:
     #jsonRead= arduino.readline()
     #print(arduino.readline())
     try:
         jsonObject= json.loads(arduino.readline())
-        print(jsonObject["x"])
+        print(jsonObject["H"])
+        print(jsonObject["T"])
+        print(jsonObject["P"])
+        print(jsonObject["A"])
+        print(jsonObject["T2"])
         print('-------')
     except Exception:
         pass
