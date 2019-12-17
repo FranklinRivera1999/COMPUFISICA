@@ -1,6 +1,8 @@
 import serial
 import json
 from firebase import firebase
+import requests
+
 
 firebase = firebase.FirebaseApplication('https://estacionmet-7edb5.firebaseio.com/',None)
 
@@ -21,6 +23,8 @@ while True:
         print(jsonObject["P"])
         print(jsonObject["A"])
         print(jsonObject["T2"])
+        print(jsonObject["V"])
+        print(jsonObject["Time"])
         print('-------')
     except Exception:
         pass
