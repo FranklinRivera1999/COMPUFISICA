@@ -4,10 +4,6 @@ from firebase import firebase
 import requests
 
 
-firebase = firebase.FirebaseApplication('https://estacionmet-7edb5.firebaseio.com/',None)
-
-result = firebase.get('/prueba', None)
-print(result)
 print('declarando ARDUINO UNO')
 PORT='/dev/ttyACM0'
 arduino = serial.Serial(PORT,9600)
@@ -25,6 +21,11 @@ while True:
         print(jsonObject["T2"])
         print(jsonObject["V"])
         print(jsonObject["Time"])
-        print('-------')
+        print(type(jsonObject["Time"]))
+        print('-------enviar thingsspeak-----')
+        enviar = requests.get("https://api.thingspeak.com/update?api_key=3HIK3GQGLHPDWYWV&field1="
+        + str(jsonObject["T"]) + "&field2=" + str(jsonObject["H"]) + "&field3=" + str(jsonObject["P"]) + "&field4=" + str(jsonObject["A"]))
+        print('GG AL')
+
     except Exception:
         pass
